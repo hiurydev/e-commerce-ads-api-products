@@ -18,7 +18,7 @@ public class CategoriaController {
 
     @PostMapping("/")
     public ResponseEntity<CategoriaRepresentation.Detail> createCategoria(
-           @Valid @RequestBody CategoriaRepresentation.CreateOrUpdateCategoria createOrUpdateCategoria) {
+        @Valid @RequestBody CategoriaRepresentation.CreateOrUpdateCategoria createOrUpdateCategoria) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(CategoriaRepresentation.Detail.from(this.categoriaService.salvar(createOrUpdateCategoria)));
@@ -26,14 +26,13 @@ public class CategoriaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaRepresentation.Detail> atualizaCategoria(@PathVariable("id") Long id,
-        @Valid @RequestBody CategoriaRepresentation.CreateOrUpdateCategoria createOrUpdateCategoria){
-
+        @Valid @RequestBody CategoriaRepresentation.CreateOrUpdateCategoria createOrUpdateCategoria) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(CategoriaRepresentation.Detail.from(this.categoriaService.update(id, createOrUpdateCategoria)));
     }
 
-    @GetMapping("/todos")
+    @GetMapping("/")
     public ResponseEntity<List<CategoriaRepresentation.Lista>> getAll() {
 
         BooleanExpression filter = QCategoria.categoria.status.eq(Categoria.Status.ATIVO);
@@ -50,7 +49,7 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCategoria(@PathVariable("id") Long id) {
         this.categoriaService.deleteCategoria(id);
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }
