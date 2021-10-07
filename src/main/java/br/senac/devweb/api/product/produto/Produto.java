@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity(name = "PRODUTO")
 public class Produto {
 
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -25,7 +25,7 @@ public class Produto {
     @Column(name = "NOME")
     private String nome;
 
-    @NotNull(message = "O campo descrição não pode ser nulo")
+    @NotNull(message = "O campo descricao não pode ser nulo")
     @Size(min = 1, max = 255, message = "O campo descrição deve conter entre 1 e 255 caracteres")
     @Column(name = "DESCRICAO")
     private String descricao;
@@ -34,22 +34,19 @@ public class Produto {
     private String complemento;
 
     @NotNull(message = "O campo valor não pode ser nulo")
-    @NotEmpty(message = "O campo valor não pode ser vazio")
     @Column(name = "VALOR")
     private Double valor;
 
     @NotNull(message = "O campo unidade de medida não pode ser nulo")
-    @NotEmpty(message = "O campo unidade de medida não pode ser vazio")
     @Column(name = "UNIDADE_MEDIDA")
     private UnidadeMedida unidadeMedida;
 
     @NotNull(message = "O campo quantidade não pode ser nulo")
-    @NotEmpty(message = "O campo quantidade não pode ser vazio")
     @Column(name = "QTDE")
     private Double qtde;
 
     @NotNull(message = "O campo fabricante não pode ser nulo")
-    @Size(min = 1, max = 100, message = "O campo fabricante deve conter entre 1 e 30 caracteres")
+    @Size(min = 1, max = 255, message = "O campo fabricante deve conter entre 1 e 255 caracteres")
     @Column(name = "FABRICANTE")
     private String fabricante;
 
@@ -57,20 +54,20 @@ public class Produto {
     private String fornecedor;
 
     @NotNull(message = "O campo status não pode ser nulo")
-    @NotEmpty(message = "O campo status não pode ser vazio")
     @Column(name = "STATUS")
     private Status status;
 
     @NotNull(message = "A categoria é obrigatória")
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Categoria.class)
-    @JoinColumn(name = "idCategoria")
+    @JoinColumn(name = "idCategoria" )
     private Categoria categoria;
 
-    public enum UnidadeMedida{
+    public enum UnidadeMedida {
         UN,
         KG,
         ML,
         TN,
+        MT,
         MT2,
         MT3,
         LT
