@@ -1,10 +1,11 @@
 package br.senac.devweb.api.product.categoria;
 
-import lombok.AllArgsConstructor;
-import com.querydsl.core.types.Predicate;
-import org.springframework.stereotype.Service;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import br.senac.devweb.api.product.exceptions.NotFoundException;
+import br.senac.devweb.api.product.produto.ProdutoService;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class CategoriaService {
 
     private CategoriaRepository categoriaRepository;
+
     public Categoria salvar(CategoriaRepresentation.CreateOrUpdateCategoria createOrUpdateCategoria) {
 
         return this.categoriaRepository.save(Categoria.builder()
