@@ -2,11 +2,11 @@ package br.senac.devweb.api.product.produto;
 
 import lombok.*;
 import br.senac.devweb.api.product.categoria.Categoria;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 @Getter
 @Setter
@@ -16,53 +16,55 @@ import javax.validation.constraints.Size;
 @Entity(name = "PRODUTO")
 public class Produto {
 
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "O campo nome não pode ser nulo")
-    @Size(min = 1, max = 30, message = "O campo nome deve conter entre 1 e 30 caracteres")
+    @NotNull(message = "Nome é obrigatório")
+    @Size(min = 1, max = 100, message = "Nome deve conter entre 1 e 100 caracteres")
     @Column(name = "NOME")
     private String nome;
 
-    @NotNull(message = "O campo descricao não pode ser nulo")
-    @Size(min = 1, max = 255, message = "O campo descrição deve conter entre 1 e 255 caracteres")
+    @NotNull(message = "Descrição é obrigatória")
+    @Size(min = 1, max = 250, message = "Descrição deve conter entre 1 e 250 caracteres")
     @Column(name = "DESCRICAO")
     private String descricao;
 
     @Column(name = "COMPLEMENTO")
     private String complemento;
 
-    @NotNull(message = "O campo valor não pode ser nulo")
-    @Column(name = "VALOR")
+    @NotNull(message = "Valor é obrigatório")
+    @Column(name = "VAlOR")
     private Double valor;
 
-    @NotNull(message = "O campo unidade de medida não pode ser nulo")
-    @Column(name = "UNIDADE_MEDIDA")
+    @NotNull(message = "Unidade de Medida é obrigatória")
+    @Column(name = "UNIDADE DE MEDIDA")
     private UnidadeMedida unidadeMedida;
 
-    @NotNull(message = "O campo quantidade não pode ser nulo")
+    @NotNull(message = "Quantidade é obrigatória")
     @Column(name = "QTDE")
     private Double qtde;
 
-    @NotNull(message = "O campo fabricante não pode ser nulo")
-    @Size(min = 1, max = 255, message = "O campo fabricante deve conter entre 1 e 255 caracteres")
+    @NotNull(message = "Fabricante é obrigatório")
+    @Size(min = 1, max = 255, message = "Fabricante deve ter entre 1 e 255 caracteres")
     @Column(name = "FABRICANTE")
     private String fabricante;
 
+    @NotNull(message = "Fornecedor é obrigatório")
+    @Size(min = 1, max = 250, message = "Fornecedor é obrigatória")
     @Column(name = "FORNECEDOR")
     private String fornecedor;
 
-    @NotNull(message = "O campo status não pode ser nulo")
+    @NotNull(message = "Status é obrigatório")
     @Column(name = "STATUS")
     private Status status;
 
     @NotNull(message = "A categoria é obrigatória")
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Categoria.class)
-    @JoinColumn(name = "idCategoria" )
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Categoria.class)
+    @JoinColumn(name = "idCategoria")
     private Categoria categoria;
 
-    public enum UnidadeMedida {
+    public enum UnidadeMedida{
         UN,
         KG,
         ML,
