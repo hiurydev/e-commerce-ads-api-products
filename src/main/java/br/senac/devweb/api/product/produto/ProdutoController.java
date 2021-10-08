@@ -2,12 +2,14 @@ package br.senac.devweb.api.product.produto;
 
 import br.senac.devweb.api.product.categoria.Categoria;
 import br.senac.devweb.api.product.categoria.CategoriaService;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/produto")
@@ -27,6 +29,20 @@ public class ProdutoController {
                 .body(ProdutoRepresentation
                         .Detalhes.from(this.produtoService.salvar(createOrUpdate, categoria)));
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProdutoRepresentation.Lista>> getAllProduto() {
+
+        BooleanExpression filter = QProduto.produto.status.eq(Produto.Status.ATIVO);
+
+        return ResponseEntity.ok(ProdutoRepresentation.Lista
+                .from(this.produtoService.getAllProduto(filter)));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoRepresentation.Detalhes> getOneProduto(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ProdutoRepresentation.Detalhes.from(this.produtoService.getProduto(id)));
     }
 
     @PutMapping ("/{id}")

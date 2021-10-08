@@ -10,6 +10,8 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public interface ProdutoRepresentation {
 
@@ -77,6 +79,28 @@ public interface ProdutoRepresentation {
                     .fornecedor(produto.getFornecedor())
                     .categoria(CategoriaRepresentation.Detail.from(produto.getCategoria()))
                     .build();
+        }
+    }
+
+    @Data
+    @Getter
+    @Setter
+    @Builder
+    class Lista {
+        private Long id;
+        private String nome;
+
+        private static Lista from(Produto produto) {
+            return Lista.builder()
+                    .id(produto.getId())
+                    .nome(produto.getNome())
+                    .build();
+        }
+
+        public static List<Lista> from(List<Produto> produtos) {
+            return produtos.stream()
+                    .map(Lista::from)
+                    .collect(Collectors.toList());
         }
     }
 }

@@ -40,7 +40,7 @@ public class ProdutoService {
 
     public Produto atualizar(Long id, ProdutoRepresentation.CreateOrUpdate createOrUpdate, Categoria categoria) {
 
-        Produto produtoAntigo = this.buscarUm(id);
+        Produto produtoAntigo = this.getProduto(id);
 
         Produto produtoAtualizado = produtoAntigo.toBuilder()
                 .nome(createOrUpdate.getNome())
@@ -57,19 +57,20 @@ public class ProdutoService {
         return this.produtoRepository.save(produtoAtualizado);
     }
 
-    public List<Produto> buscarTodos(Predicate filter) {
+    public List<Produto> getAllProduto(Predicate filter) {
         return this.produtoRepository.findAll(filter);
     }
 
-    public Produto buscarUm(Long id) {
-        BooleanExpression filter = QProduto.produto.id.eq(id)
-                .and(QProduto.produto.status.eq(Produto.Status.ATIVO));
+    public Produto getProduto(Long id) {
+        BooleanExpression filter =
+                QProduto.produto.id.eq(id)
+                        .and(QProduto.produto.status.eq(Produto.Status.ATIVO));
         return this.produtoRepository.findOne(filter)
-                .orElseThrow(() -> new NotFoundException("Produto não encontrado."));
+                .orElseThrow(() -> new NotFoundException("Produto não encontrada."));
     }
 
     public void deletar(Long id) {
-        Produto produto = this.buscarUm(id);
+        Produto produto = this.getProduto(id);
         produto.setStatus(Produto.Status.INATIVO);
         this.produtoRepository.save(produto);
     }
