@@ -89,11 +89,15 @@ public interface ProdutoRepresentation {
     class Lista {
         private Long id;
         private String nome;
+        private String complemento;
+        private Double valor;
 
         private static Lista from(Produto produto) {
             return Lista.builder()
                     .id(produto.getId())
                     .nome(produto.getNome())
+                    .complemento(produto.getComplemento())
+                    .valor(produto.getValor())
                     .build();
         }
 
